@@ -1,0 +1,29 @@
+server:
+  port: 8101
+
+
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: saga
+          uri: lb://saga
+          predicates:
+            - Path=/saga/**
+          filters:
+            - StripPrefix=1
+        - id: vue
+          uri: lb://vue
+          predicates:
+            - Path=/vue/**
+          filters:
+            - StripPrefix=1
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka
